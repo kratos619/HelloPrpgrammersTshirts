@@ -22,7 +22,7 @@
               <a href="index.cshtml" class="nav-link">Dashboard</a>
             </li>
             <li class="nav-item px-2">
-              <a href="posts.cshtml" class="nav-link active">Posts</a>
+              <a href="products_details.cshtml" class="nav-link active">Products</a>
             </li>
             <li class="nav-item px-2">
               <a href="categories.cshtml" class="nav-link">Categories</a>
@@ -96,55 +96,39 @@
                 <tr>
                   <th>#</th>
                   <th>Title</th>
-                  <th>Category</th>
+                    <th>Category</th>
+                    <th>Description</th>
+                    <th>Cost</th>
+                    <th>Size</th>
                   <th>Date Posted</th>
-                  <th></th>
+                  <th>Action</th>
                 </tr>
               </thead>
-              <tbody>
-                <tr>
-                  <td scope="row">1</td>
-                  <td>Post One</td>
-                  <td>Web Development</td>
-                  <td>July 11, 2017</td>
-                  <td><a href="details.cshtml" class="btn btn-secondary"><i class="fa fa-angle-double-right"></i> Details</a></td>
-                </tr>
-                <tr>
-                  <td scope="row">2</td>
-                  <td>Post Two</td>
-                  <td>Web Development</td>
-                  <td>July 12, 2017</td>
-                  <td><a href="details.cshtml" class="btn btn-secondary"><i class="fa fa-angle-double-right"></i> Details</a></td>
-                </tr>
-                <tr>
-                  <td scope="row">3</td>
-                  <td>Post Three</td>
-                  <td>Tech Gadgets</td>
-                  <td>July 12, 2017</td>
-                  <td><a href="details.cshtml" class="btn btn-secondary"><i class="fa fa-angle-double-right"></i> Details</a></td>
-                </tr>
-                <tr>
-                  <td scope="row">4</td>
-                  <td>Post Four</td>
-                  <td>Health & Wellness</td>
-                  <td>July 13, 2017</td>
-                  <td><a href="details.cshtml" class="btn btn-secondary"><i class="fa fa-angle-double-right"></i> Details</a></td>
-                </tr>
-                <tr>
-                  <td scope="row">5</td>
-                  <td>Post Five</td>
-                  <td>Web Development</td>
-                  <td>July 14, 2017</td>
-                  <td><a href="details.cshtml" class="btn btn-secondary"><i class="fa fa-angle-double-right"></i> Details</a></td>
-                </tr>
-                <tr>
-                  <td scope="row">6</td>
-                  <td>Post Six</td>
-                  <td>Business</td>
-                  <td>July 14, 2017</td>
-                  <td><a href="details.cshtml" class="btn btn-secondary"><i class="fa fa-angle-double-right"></i> Details</a></td>
-                </tr>
-              </tbody>
+                <tbody>
+                @{
+                    var db = Database.Open("HELLOPROGRAMMERS");
+
+                    var displayQuery = "select * from products";
+
+                                    }
+                
+                @{
+                    foreach (var row in db.Query(displayQuery))
+                    {
+                        <tr>
+                            <td scope="row">@row.p_id</td>
+                            <td>@row.p_name</td>
+                            <td>@row.c_name</td>
+                            <td>@row.p_description</td>
+                            <td>@row.p_cost</td>
+                            <td>@row.p_size</td>
+                            <td>12/122/21</td>
+                            <td><a href="details.cshtml" class="btn btn-secondary"><i class="fa fa-angle-double-right"></i> Details</a></td>
+                        </tr>
+                    }
+                }
+                
+                </tbody>
             </table>
             <nav class="ml-4">
               <ul class="pagination">

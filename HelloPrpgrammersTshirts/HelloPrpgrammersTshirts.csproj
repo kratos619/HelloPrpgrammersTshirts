@@ -178,7 +178,11 @@
     <Content Include="src\fonts\fontawesome-webfont.woff" />
     <Content Include="src\fonts\fontawesome-webfont.woff2" />
     <Content Include="src\fonts\FontAwesome.otf" />
+    <Content Include="src\P_img\product_1.png" />
     <Content Include="src\scss\style.scss" />
+    <Content Include="src\add_items.cshtml" />
+    <Content Include="src\Shared\Admin_Header.cshtml" />
+    <Content Include="src\Shared\Admin_footer.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
