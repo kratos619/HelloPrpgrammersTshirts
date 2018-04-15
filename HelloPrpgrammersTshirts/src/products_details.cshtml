@@ -40,47 +40,49 @@
                     </div>
                     <table class="table table-striped">
                         <thead class="thead-inverse">
-                            <tr>
-                                <th>#</th>
-                                <th>Title</th>
-                                <th>Category</th>
-                                <th>Description</th>
-                                <th>Cost</th>
-                                <th>Size</th>
-                                <th>Date Posted</th>
-                                <th>Action</th>
-                            </tr>
+                        <tr>
+                            <th>#</th>
+                            <th>Title</th>
+                            <th>Category</th>
+                            <th>Description</th>
+                            <th>Cost</th>
+                            <th>Size</th>
+                            <th>Date Posted</th>
+                            <th>Action</th>
+                        </tr>
                         </thead>
                         <tbody>
-                            @{
-                                var db = Database.Open("HELLOPROGRAMMERS");
+                        @{
+                            var db = Database.Open("HELLOPROGRAMMERS");
 
-                                var displayQuery = "select * from products";
+                            var displayQuery = "select * from products";
 
+                        }
+
+                        @{
+                            foreach (var row in db.Query(displayQuery))
+                            {
+                                var id = row.p_id;
+                                <tr>
+                                    <td scope="row">@row.p_id</td>
+                                    <td>@row.p_name</td>
+                                    <td>@row.c_name</td>
+                                    <td>@row.p_description</td>
+                                    <td>@row.p_cost</td>
+                                    <td>@row.p_size</td>
+                                    <td>@row.date</td>
+                                    <td>
+                                        <a href="update_item.cshtml?p_id=@row.p_id" class="btn btn-secondary"><i class="fa fa-angle-double-right"></i> Details</a> || 
+                                        <a href="delete_products.cshtml?p_id=@id" class="btn btn-danger"><i class="fa fa-angle-double-right"></i> Delete</a>
+                                    </td>
+
+                                </tr>
                             }
-
-                            @{
-                                foreach (var row in db.Query(displayQuery))
-                                {
-                                    <tr>
-                                        <td scope="row">@row.p_id</td>
-                                        <td>@row.p_name</td>
-                                        <td>@row.c_name</td>
-                                        <td>@row.p_description</td>
-                                        <td>@row.p_cost</td>
-                                        <td>@row.p_size</td>
-                                        <td>@row.date</td>
-                                        <td>
-                                            <a href="update_item.cshtml?p_id=@row.p_id" class="btn btn-secondary"><i class="fa fa-angle-double-right"></i> Details</a> || 
-                                            <a href="delete_products.cshtml" class="btn btn-danger"><i class="fa fa-angle-double-right"></i> Delete</a>
-                                        </td>
-
-                                    </tr>
-                                }
-                            }
+                        }
 
                         </tbody>
                     </table>
+                    
                     <nav class="ml-4">
                         <ul class="pagination">
                             <li class="page-item">

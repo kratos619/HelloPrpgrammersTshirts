@@ -5,7 +5,20 @@
 
 <body>
     <div>
+        @{
+            var selected_id = "";
+            if (!Request.QueryString["p_id"].IsEmpty() && Request.QueryString["p_id"].IsInt())
+            {
+                selected_id =  Request.QueryString["p_id"];
 
+                var db = Database.Open("HELLOPROGRAMMERS");
+
+                var query = "delete from products where p_id = @0";
+                db.QuerySingle(query, selected_id);
+                Response.Redirect("products_details.cshtml");
+
+            }
+        }
     </div>
 </body>
 @RenderPage("Shared/Admin_footer.cshtml")
