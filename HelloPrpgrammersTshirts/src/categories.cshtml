@@ -14,17 +14,30 @@
     <!-- ACTIONS -->
     <section id="actions" class="py-4 mb-4 bg-faded">
       <div class="container">
-        <div class="row">
-          <div class="col-md-6 offset-md-6">
-            <div class="input-group">
-              <input type="text" class="form-control" placeholder="Search Categories...">
-              <span class="input-goup-btn">
-                <button type="button" class="btn btn-success" name="button">search</button>
-              </span>
-            </div>
-          </div>
+          <div class="row">
+              <div class="col-md-6">
+                  
+                  <section id="actions" class=" bg-faded">
+                      <div class="container">
+                          <div class="row">
+                              <div class="">
+                                  <a href="add_items.cshtml" class="btn btn-primary btn-block" ><i class="fa fa-plus"></i> Add New Categories</a>
+                              </div>
+                          </div>
+                      </div>
+                  </section>
 
-        </div>
+              </div>
+                            <div class="col-md-6">
+                  <div class="input-group">
+                      <input type="text" class="form-control" placeholder="Search Categories...">
+                      <span class="input-goup-btn">
+                          <button type="button" class="btn btn-success" name="button">search</button>
+                      </span>
+                  </div>
+              </div>
+
+          </div>
       </div>
     </section>
 
@@ -33,50 +46,47 @@
   <section id="categories">
     <div class="container">
       <div class="row">
-        <div class="col">
+        <div class="col-md-6">
           <div class="card">
-            <div class="card-header">
-              <h4>Categories Posts</h4>
-            </div>
-            <table class="table table-striped">
-              <thead class="thead-inverse">
-                <tr>
-                  <th>#</th>
-                  <th>Title</th>
+              <div class="card-header">
+                  <h4>All Categories</h4>
+              </div>
+              @{
+                  var db = Database.Open("HELLOPROGRAMMERS");
+                  var query = "select * from categories";
 
-                  <th>Date Posted</th>
+              }
+              <div class="">
+                  <table class="table table-striped">
+                      <thead class="thead-inverse">
+                      <tr>
+                          <th>#</th>
+                          <th>Categories Name</th>
+                          <th> Action </th>
+                      </tr>
+                      </thead>
 
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td scope="row">1</td>
-                  <td>web devlopment</td>
+                      <tbody>
+                      @foreach (var row in db.Query(query))
+                      {
+                               
+                          <tr>
+                              <td scope="row">@row.c_id</td>
+                              <td>@row.c_name</td>
+                              <td>
+                                  <a href="categories.cshtml?c_id=@row.c_id">Edit </a>
+                                  ||
+                                  <a href="categories.cshtml?c_id=@row.c_id">Delete</a>
+                              </td>
+                          </tr>
 
-                  <td>July 11, 2017</td>
-
-                </tr>
-                <tr>
-                  <td scope="row">2</td>
-                  <td>Tech Gadgets</td>
-                  <td>July 12, 2017</td>
-
-                </tr>
-                <tr>
-                  <td scope="row">3</td>
-                  <td>business</td>
-                  <td>July 12, 2017</td>
-                    </tr>
-                <tr>
-                  <td scope="row">4</td>
-                  <td>Health & Wellness</td>
-                  <td>July 13, 2017</td>
-
-                </tr>
-
-              </tbody>
-            </table>
-            <nav class="ml-4">
+                      }
+ 
+                      </tbody>
+                  </table>
+              </div>
+              
+                           <nav class="ml-4">
               <ul class="pagination">
                 <li class="page-item">
                   <a href="#" class="page-link disabled">Previous</a>
@@ -97,6 +107,67 @@
             </nav>
           </div>
         </div>
+          <div class="col-md-6">
+              @{
+                  var c_id = "";
+                  var c_name = "";
+
+                  var selected_id = "";
+                  if (!IsPost)
+                  {
+                      selected_id = Request.QueryString["c_id"];
+                      var dbCommand = "select * categories where c_id = @0";
+                      var row = db.QuerySingle(dbCommand, selected_id);
+                      c_id = row.c_id;
+                      c_name = row.c_id;
+
+
+                  }
+              }
+              
+              <form method="post">
+                  <div class="form-group">
+                      <label for="exampleInputEmail1">Categories ID</label>
+                      
+                      <div class="form-group">
+                          <label>Example select</label>
+                          <select name="c_id" value="@c_id" class="form-control">
+                              
+                              @{
+
+                                  foreach (var row in db.Query(query))
+                                  {
+                                      var add = row.c_id + 1;
+                                      
+                                      <option>@add</option>
+                              
+                                  }
+                              }
+                          </select>
+                      </div>
+                  </div>
+                  
+                  <div class="form-group">
+                      <label for="exampleInputPassword1">Password</label>
+                      <input type="text" name="c_name" value="@c_name" class="form-control" id="" placeholder="Categories">
+                  </div>
+                  <button type="submit" class="btn btn-primary">Submit</button>
+              </form>
+              @{
+                  
+                  if (IsPost)
+                  {
+                      c_id = Request.Form["c_id"];
+                      c_name = Request.Form["c_name"];
+
+                      query = "insert into categories (c_id,c_name) values (@0,@1)";
+                      db.Execute(query, c_id, c_name);
+                      Response.Redirect("categories.cshtml");
+                  }
+              }
+             
+          </div>  
+
 
       </div>
     </div>
