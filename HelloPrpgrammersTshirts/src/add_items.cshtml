@@ -18,7 +18,7 @@
 
                                 <div class="card-block">
                                     @{
-
+                                    
                                     }
                                     @{
         var db = Database.Open("HELLOPROGRAMMERS");
@@ -80,12 +80,12 @@
                             }
                 
                             <select class="form-control" id="exampleFormControlSelect1">
-                                <option> .....</option>
+                                <option> --------- </option>
                                 @foreach (var row in db.Query(categories))
                                 {
                                     var selectCat = row.c_name;
 
-                                    <option name="c_name" value="@Request.Form[selectCat]"  >@selectCat</option>
+                                    <option name="c_name" value="@Request.Form["c_name"]"  >@selectCat</option>
 
 
                                 }

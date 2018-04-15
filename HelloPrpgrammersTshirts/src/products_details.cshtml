@@ -58,7 +58,7 @@
       <div class="container">
         <div class="row">
           <div class="col-md-6">
-            <h1><i class="fa fa-pencil"></i> post</h1>
+            <h1><i class="fa fa-pencil"></i> Products</h1>
           </div>
         </div>
       </div>
@@ -70,7 +70,7 @@
         <div class="row">
           <div class="col-md-6 offset-md-6">
             <div class="input-group">
-              <input type="text" class="form-control" placeholder="Search Posts...">
+              <input type="text" class="form-control" placeholder="Search Products...">
               <span class="input-goup-btn">
                 <button type="button" class="btn btn-primary" name="button">search</button>
               </span>
@@ -86,10 +86,10 @@
   <section id="posts">
     <div class="container">
       <div class="row">
-        <div class="col">
+        <div class="col-lg-12">
           <div class="card">
             <div class="card-header">
-              <h4>Latest Posts</h4>
+              <h4>All Products</h4>
             </div>
             <table class="table table-striped">
               <thead class="thead-inverse">
@@ -122,8 +122,10 @@
                             <td>@row.p_description</td>
                             <td>@row.p_cost</td>
                             <td>@row.p_size</td>
-                            <td>12/122/21</td>
-                            <td><a href="details.cshtml" class="btn btn-secondary"><i class="fa fa-angle-double-right"></i> Details</a></td>
+                            <td>@row.date</td>
+                            <td><a href="update_item.cshtml?p_id=@row.p_id" class="btn btn-secondary"><i class="fa fa-angle-double-right"></i> Details</a> || <a href="update_item.cshtml?p_id=@row.p_id" class="btn btn-danger"><i class="fa fa-angle-double-right"></i> Delete</a>
+                            </td>
+                            
                         </tr>
                     }
                 }
