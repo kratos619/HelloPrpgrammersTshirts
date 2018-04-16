@@ -1,8 +1,12 @@
 ﻿@using System.Data.Entity.Core.Common.CommandTrees.ExpressionBuilder
 @using System.Web.Mvc.Html
+@using System.Web.WebPages
+
+
 @{
     Layout = "Shared/Admin_Header.cshtml";
 }
+
 <header id="main-header" class="py-2 bg-primary text-white">
     <div class="container">
         <div class="row">
@@ -34,9 +38,15 @@
                         <h4>Account Lognin</h4>
                     </div>
                     <div class="car-block">
+
                         @{
+                            
+                         
                             Validation.RequireField("a_email", "Email Is Required");
                             Validation.RequireField("a_password", "Password Is Required");
+                            var a_name = "";
+                            var a_lastname = "";
+
                             var email = "";
                             var password = "";
                             var selected_email = "";
@@ -45,24 +55,36 @@
                             var find_all_admin = "select * from Admin ";
                             foreach (var VARIABLE in db.Query(find_all_admin))
                             {
+                                a_name = VARIABLE.a_name;
+                                a_lastname = VARIABLE.a_lastname;
                                 email = VARIABLE.a_email;
                                 password = VARIABLE.a_password;
                             }
 
-                            if (IsPost &&  Validation.IsValid())
+                            if (IsPost && Validation.IsValid())
 
                             {
                                 selected_email = Request["a_email"];
                                 selected_password = Request["a_password"];
+
                                 if (selected_password == password || selected_email == email)
                                 {
-                                    Response.Redirect("index.cshtml");
+
+                                    Session["a_name"] = a_name;
+                                    Session["a_lastname"] = a_lastname;
+                                    Session[selected_email] = email;
+                                    Response.Write(Session[selected_email]);
+
+
+                                    //  Response.Redirect("index.cshtml");
                                 }
                                 else
                                 {
-                                  
+
                                     <div class="alert alert-danger" role="alert">
-                                      Response.Write("wrong Id and Password");
+                                        <h5>
+                                            wrong Id and Password
+                                        </h5>
                                     </div>
                                 }
 
@@ -83,7 +105,7 @@
                                 @Html.ValidationMessage("a_password")
                             </div>
 
-                            <input type="submit" name="buttonLogin" class="btn btn-primary btn-block mb-3" value="Login"/> 
+                            <input type="submit" name="buttonLogin" class="btn btn-primary btn-block mb-3" value="Login"/>
                         </form>
                     </div>
 
