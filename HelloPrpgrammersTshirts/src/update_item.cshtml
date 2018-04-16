@@ -5,163 +5,164 @@
              }
 
 <body>
-    <div class="container">
-        <div class="row">
 
-            <section id="add_items">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-9">
-                            <div class="card">
-                                <div class="card-header">
-                                    <h4>Update Items</h4>
-                                </div>
-                                @{
+<div class="container">
+    <div class="row">
+
+        <section id="add_items">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-9">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4>Update Items</h4>
+                            </div>
+                            @{
 
 
-                                    var selected_p_id = "";
-                                    
-                                    var p_name = "";
-                                    var p_description = "";
-                                    var p_cost = "";
-                                    var p_size = "";
-                                    var p_img = "";
-                                    var c_name = "";
-                                    if (!IsPost)
+                                var selected_p_id = "";
+
+                                var p_name = "";
+                                var p_description = "";
+                                var p_cost = "";
+                                var p_size = "";
+                                var p_img = "";
+                                var c_name = "";
+                                if (!IsPost)
+                                {
+                                    if (!Request.QueryString["p_id"].IsEmpty() && Request.QueryString["p_id"].IsInt())
                                     {
-                                        if (!Request.QueryString["p_id"].IsEmpty() && Request.QueryString["p_id"].IsInt())
+                                        selected_p_id = Request.QueryString["p_id"];
+                                        Response.Write(selected_p_id);
+                                        var db = Database.Open("HELLOPROGRAMMERS");
+                                        var query = "select * from products where p_id = @0";
+                                        var row = db.QuerySingle(query, selected_p_id);
+
+                                        if (row != null)
                                         {
-                                            selected_p_id = Request.QueryString["p_id"];
-                                            Response.Write(selected_p_id);
-                                            var db = Database.Open("HELLOPROGRAMMERS");
-                                            var query = "select * from products where p_id = @0";
-                                            var row = db.QuerySingle(query, selected_p_id);
 
-                                            if (row != null)
-                                            {
-                                                
-                                                p_name = row.p_name;
-                                                p_description = row.p_description;
-                                                p_cost = row.p_cost;
-                                                p_size = row.p_size;
-                                                p_img = row.p_img;
-                                                c_name = row.c_name;
+                                            p_name = row.p_name;
+                                            p_description = row.p_description;
+                                            p_cost = row.p_cost;
+                                            p_size = row.p_size;
+                                            p_img = row.p_img;
+                                            c_name = row.c_name;
 
 
-                                            }
-                                            else
-                                            {
-                                                Validation.AddFormError("No Product was selected.");
-                                            }
                                         }
                                         else
                                         {
                                             Validation.AddFormError("No Product was selected.");
                                         }
+                                    }
+                                    else
+                                    {
+                                        Validation.AddFormError("No Product was selected.");
+                                    }
 
+                                }
+                            }
+                            <div class="card-block">
+
+                                <form action="" method="post" enctype="multipart/form-data">
+
+                                    <div class="form-group">
+                                        <label for="name" class="form-control-label">Product Name</label>
+                                        <input type="text" name="p_name" value="@p_name" class="form-control">
+                                    </div>
+                                    <div class="container">
+                                        <div class="row">
+                                            <div class="col-sm-4">
+                                                <div class="form-group">
+                                                    <label for="exampleFormControlSelect1">select Categories</label>
+
+                                                    <select class="form-control" id="exampleFormControlSelect1">
+                                                        <option> --------- </option>
+
+                                                        <option name="c_name"> @c_name</option>
+
+                                                    </select>
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="p_cost" class="form-control-label">Product Cost</label>
+                                        <input type="text" name="p_cost" value="@p_cost" class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="size" class="form-control-label">Product Size</label>
+                                        <input type="text" name="p_size" value="@p_cost" class="form-control">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="p_description">Product Description</label>
+                                        <textarea name="p_description" value="" class="form-control">@p_description</textarea>
+                                    </div>
+                                    <!--
+                                    <div class="form-group bg-faded p-3">
+                                        <label for="file">Image Upload</label>
+                                        <input type="file" name="p_img" class="form-control-file" id="file">
+                                        <small id="fileHelp" class="form-text text-muted">
+                                            Max Size 3MB
+                                        </small>
+                                    </div>
+                                    -->
+
+                                    <div class="container">
+                                        <div class="row">
+                                            <div class="col-md-3 mr-auto">
+                                                <a href="index.cshtml" class="btn btn-secondary btn-block"><i class="fa fa-arrow-left"></i> Back To Dashboard</a>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <input type="submit" class="btn btn-block btn-primary" value="Update Item">
+                                            </div>
+                                            <div class="col-md-3">
+                                                <a href="index.cshtml" class="btn btn-danger btn-block"><i class="fa fa-remove"></i> Cancel </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+
+                                @{
+                                    if (IsPost)
+                                    {
+                                        Validation.RequireField("p_id", "Id Is Required");
+                                        Validation.RequireField("p_name", "Name Is Required");
+                                        Validation.RequireField("p_description", "Description Is Required");
+                                        Validation.RequireField("p_cost", "Cost Is Required");
+                                        Validation.RequireField("p_size", "Size Is Required");
+
+
+                                        p_name = Request.Form["p_name"];
+                                        p_description = Request.Form["p_description"];
+                                        p_cost = Request.Form["p_cost"];
+                                        p_size = Request.Form["p_size"];
+                                        // date = Request.Form["date"];
+                                        c_name = Request.Form["c_name"];
+
+                                        if (Validation.IsValid())
+                                        {
+                                            var db = Database.Open("HELLOPROGRAMMERS");
+                                            var updatecmd = " Update products set p_name=@1,p_description=@2,p_cost=@3,p_size=@4,c_name=5";
+                                            db.Execute(updatecmd, p_name, p_description, p_cost, p_size, c_name);
+                                            Response.Redirect("products_details.cshtml");
+                                        }
                                     }
                                 }
-                                    <div class="card-block">
-                                        
-                                        <form action="" method="post" enctype="multipart/form-data">
-                                            
-                                            <div class="form-group">
-                                                <label for="name" class="form-control-label">Product Name</label>
-                                                <input type="text" name="p_name" value="@p_name" class="form-control">
-                                            </div>
-                                            <div class="container">
-                                                <div class="row">
-                                                    <div class="col-sm-4">
-                                                        <div class="form-group">
-                                                            <label for="exampleFormControlSelect1">select Categories</label>
-
-                                                            <select class="form-control" id="exampleFormControlSelect1">
-                                                                <option> --------- </option>
-
-                                                                <option name="c_name"> @c_name</option>
-
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                  
-
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group">
-                                                <label for="p_cost" class="form-control-label">Product Cost</label>
-                                                <input type="text" name="p_cost" value="@p_cost" class="form-control">
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="size" class="form-control-label">Product Size</label>
-                                                <input type="text" name="p_size" value="@p_cost" class="form-control">
-                                            </div>
-
-                                            <div class="form-group">
-                                                <label for="p_description">Product Description</label>
-                                                <textarea name="p_description" value="" class="form-control">@p_description</textarea>
-                                            </div>
-                                            <!--
-                                            <div class="form-group bg-faded p-3">
-                                                <label for="file">Image Upload</label>
-                                                <input type="file" name="p_img" class="form-control-file" id="file">
-                                                <small id="fileHelp" class="form-text text-muted">
-                                                    Max Size 3MB
-                                                </small>
-                                            </div>
-                                            -->
-
-                                            <div class="container">
-                                                <div class="row">
-                                                    <div class="col-md-3 mr-auto">
-                                                        <a href="index.cshtml" class="btn btn-secondary btn-block"><i class="fa fa-arrow-left"></i> Back To Dashboard</a>
-                                                    </div>
-                                                    <div class="col-md-3">
-                                                        <input type="submit" class="btn btn-block btn-primary" value="Update Item">
-                                                    </div>
-                                                    <div class="col-md-3">
-                                                        <a href="index.cshtml" class="btn btn-danger btn-block"><i class="fa fa-remove"></i> Cancel </a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </form>
-                                        
-                                        @{
-                                            if (IsPost)
-                                            {
-                                                Validation.RequireField("p_id", "Id Is Required");
-                                                Validation.RequireField("p_name", "Name Is Required");
-                                                Validation.RequireField("p_description", "Description Is Required");
-                                                Validation.RequireField("p_cost", "Cost Is Required");
-                                                Validation.RequireField("p_size", "Size Is Required");
-
-
-                                                p_name = Request.Form["p_name"];
-                                                p_description = Request.Form["p_description"];
-                                                p_cost = Request.Form["p_cost"];
-                                                p_size = Request.Form["p_size"];
-                                                // date = Request.Form["date"];
-                                                c_name = Request.Form["c_name"];
-
-                                                if (Validation.IsValid())
-                                                {
-                                                    var db = Database.Open("HELLOPROGRAMMERS");
-                                                    var updatecmd = " Update products set p_name=@1,p_description=@2,p_cost=@3,p_size=@4,c_name=5";
-                                                    db.Execute(updatecmd, p_name, p_description, p_cost, p_size, c_name);
-                                                    Response.Redirect("products_details.cshtml");
-                                                }
-                                            }
-                                        }
-                                    </div>
                             </div>
                         </div>
-                        <div class="col-md-3">
+                    </div>
+                    <div class="col-md-3">
 
-                        </div>
                     </div>
                 </div>
-            </section>
-        </div>
+            </div>
+        </section>
     </div>
+</div>
 </body>
 @RenderPage("Shared/Admin_footer.cshtml")

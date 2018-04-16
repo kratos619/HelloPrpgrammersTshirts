@@ -1,4 +1,6 @@
-﻿@{
+﻿@using System.Data.Entity.Core.Common.CommandTrees.ExpressionBuilder
+@using System.Web.Mvc.Html
+@{
     Layout = "Shared/Admin_Header.cshtml";
 }
 <header id="main-header" class="py-2 bg-primary text-white">
@@ -32,17 +34,56 @@
                         <h4>Account Lognin</h4>
                     </div>
                     <div class="car-block">
-                        <form action="index.cshtml">
+                        @{
+                            Validation.RequireField("a_email", "Email Is Required");
+                            Validation.RequireField("a_password", "Password Is Required");
+                            var email = "";
+                            var password = "";
+                            var selected_email = "";
+                            var selected_password = "";
+                            var db = Database.Open("HELLOPROGRAMMERS");
+                            var find_all_admin = "select * from Admin ";
+                            foreach (var VARIABLE in db.Query(find_all_admin))
+                            {
+                                email = VARIABLE.a_email;
+                                password = VARIABLE.a_password;
+                            }
+
+                            if (IsPost &&  Validation.IsValid())
+
+                            {
+                                selected_email = Request["a_email"];
+                                selected_password = Request["a_password"];
+                                if (selected_password == password || selected_email == email)
+                                {
+                                    Response.Redirect("index.cshtml");
+                                }
+                                else
+                                {
+                                  
+                                    <div class="alert alert-danger" role="alert">
+                                      Response.Write("wrong Id and Password");
+                                    </div>
+                                }
+
+
+                            }
+
+                        }
+                        @Html.ValidationSummary()
+                        <form action="" method="post">
                             <div class="form-group">
                                 <label for="email" class="form-control-label">Email</label>
-                                <input type="text" class="form-control">
+                                <input type="email" name="a_email" class="form-control">
+                                @Html.ValidationMessage("a_email")
                             </div>
                             <div class="form-group">
                                 <label for="password" class="form-control-label">Password</label>
-                                <input type="password" class="form-control">
+                                <input type="password" name="a_password" class="form-control">
+                                @Html.ValidationMessage("a_password")
                             </div>
 
-                            <button class="btn btn-primary btn-block mb-3"> Login </button>
+                            <input type="submit" name="buttonLogin" class="btn btn-primary btn-block mb-3" value="Login"/> 
                         </form>
                     </div>
 

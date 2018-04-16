@@ -28,6 +28,10 @@
     </div>
 </section>
 
+@{
+    var db = Database.Open("HELLOPROGRAMMERS");
+
+}
 <!--Post-->
 <!-- POSTS -->
 <section id="users">
@@ -36,30 +40,42 @@
             <div class="col">
                 <div class="card">
                     <div class="card-header">
-                        <h4>Categories Posts</h4>
+                        <h4>Users Details</h4>
                     </div>
                     <table class="table table-striped">
                         <thead class="thead-inverse">
                             <tr>
                                 <th>#</th>
-                                <th>Name</th>
+                                <th>First Name</th>
+                                <th>Last Name</th>
                                 <th>Email</th>
+                                <th>Address</th>
                                 <th>Date Register</th>
+                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td scope="row">1</td>
-                                <td>John Doe</td>
-                                <td>jdoe@mail.com</td>
-                                <td>July 11, 2017</td>
-                            </tr>
-                            <tr>
-                                <td scope="row">2</td>
-                                <td>Saurabh pal</td>
-                                <td>spal@mail.com</td>
-                                <td>July 12, 2017</td>
-                            </tr>
+                        @{
+                            var query = "select * from users";
+                            foreach (var row in db.Query(query))
+                            {
+                             
+                                <tr>
+                                    <td scope="row">@row.u_id</td>
+                                    <td>@row.u_name</td>
+                                    <td>@row.u_lastname</td>
+                                    <td>@row.u_email</td>
+                                    <td>@row.u_address</td>
+                                    <td>@row.date_register</td>
+                                    <td>
+                                        <a href="edit_users.csthml">Edit</a>
+                                        ||
+                                        <a href="users.cshtml">Delete</a>
+                                    </td>
+                                </tr>
+   
+                            }
+                        }
                         </tbody>
                     </table>
 

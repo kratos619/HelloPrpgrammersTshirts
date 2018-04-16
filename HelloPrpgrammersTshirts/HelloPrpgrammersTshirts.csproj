@@ -185,6 +185,7 @@
     <Content Include="src\Shared\Admin_footer.cshtml" />
     <Content Include="src\update_item.cshtml" />
     <Content Include="src\delete_products.cshtml" />
+    <Content Include="src\edit_users.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

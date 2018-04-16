@@ -113,7 +113,7 @@
                   var c_name = "";
 
                   var selected_id = "";
-                  if (!IsPost)
+                  if (IsPost)
                   {
                       selected_id = Request.QueryString["c_id"];
                       var dbCommand = "select * categories where c_id = @0";
@@ -195,3 +195,18 @@
     </script>
 </body>
 </html>
+
+@{
+    selected_id = "";
+    if (!Request.QueryString["c_id"].IsEmpty() && Request.QueryString["c_id"].IsInt())
+    {
+        selected_id =  Request.QueryString["c_id"];
+
+        db = Database.Open("HELLOPROGRAMMERS");
+
+        query = "delete from categories where c_id = @0";
+        db.QuerySingle(query, selected_id);
+        Response.Redirect("categories.cshtml");
+
+    }
+}
