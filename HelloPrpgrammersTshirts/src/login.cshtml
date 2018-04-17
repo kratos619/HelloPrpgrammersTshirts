@@ -40,56 +40,55 @@
                     <div class="car-block">
 
                         @{
-                            
-                         
-                            Validation.RequireField("a_email", "Email Is Required");
-                            Validation.RequireField("a_password", "Password Is Required");
-                            var a_name = "";
-                            var a_lastname = "";
-
-                            var email = "";
-                            var password = "";
-                            var selected_email = "";
-                            var selected_password = "";
-                            var db = Database.Open("HELLOPROGRAMMERS");
-                            var find_all_admin = "select * from Admin ";
-                            foreach (var VARIABLE in db.Query(find_all_admin))
-                            {
-                                a_name = VARIABLE.a_name;
-                                a_lastname = VARIABLE.a_lastname;
-                                email = VARIABLE.a_email;
-                                password = VARIABLE.a_password;
-                            }
-
-                            if (IsPost && Validation.IsValid())
-
-                            {
-                                selected_email = Request["a_email"];
-                                selected_password = Request["a_password"];
-
-                                if (selected_password == password || selected_email == email)
-                                {
-
-                                    Session["a_name"] = a_name;
-                                    Session["a_lastname"] = a_lastname;
-                                    Session[selected_email] = email;
-                                    Response.Write(Session[selected_email]);
 
 
-                                    //  Response.Redirect("index.cshtml");
-                                }
-                                else
-                                {
+        Validation.RequireField("a_email", "Email Is Required");
+        Validation.RequireField("a_password", "Password Is Required");
+        var a_name = "";
+        var a_lastname = "";
 
-                                    <div class="alert alert-danger" role="alert">
-                                        <h5>
-                                            wrong Id and Password
-                                        </h5>
-                                    </div>
-                                }
+        var email = "";
+        var password = "";
+        var selected_email = "";
+        var selected_password = "";
+
+        if (IsPost && Validation.IsValid())
+        {
+            selected_email = Request["a_email"];
+            selected_password = Request["a_password"];
+            var db = Database.Open("HELLOPROGRAMMERS");
+            var find_all_admin = "select * from Admin where  a_email = + '" + selected_email + "' and a_password ='" + selected_password + "'";
 
 
-                            }
+            foreach (var VARIABLE in db.Query(find_all_admin))
+            {
+                a_name = VARIABLE.a_name;
+                a_lastname = VARIABLE.a_lastname;
+                email = VARIABLE.a_email;
+                password = VARIABLE.a_password;
+                                    
+            }
+
+            if (selected_email == email && selected_password == password)
+            {
+                var username = Session["a_name"] = a_name;
+                Session["a_lastname"] = a_lastname;
+                Response.Write("session create" + Session["a_name"]);
+
+                Response.Redirect("index.cshtml");
+            }
+            else
+            {
+
+                    <div class="alert alert-danger" role="alert">
+                        <h5>
+                            wrong Id and Password
+                        </h5>
+                    </div>
+}
+
+
+}
 
                         }
                         @Html.ValidationSummary()
@@ -105,7 +104,7 @@
                                 @Html.ValidationMessage("a_password")
                             </div>
 
-                            <input type="submit" name="buttonLogin" class="btn btn-primary btn-block mb-3" value="Login"/>
+                            <input type="submit" name="buttonLogin" class="btn btn-primary btn-block mb-3" value="Login" />
                         </form>
                     </div>
 
