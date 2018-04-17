@@ -1,0 +1,8 @@
+﻿@{
+    Session.Abandon();
+    Session["a_name"] = null;
+    Session["a_lastname"] = null;
+    Session["a_email"] = null;
+    Response.Redirect("login.cshtml");
+}
+

@@ -41,7 +41,6 @@
 
                         @{
 
-
         Validation.RequireField("a_email", "Email Is Required");
         Validation.RequireField("a_password", "Password Is Required");
         var a_name = "";
@@ -71,8 +70,10 @@
 
             if (selected_email == email && selected_password == password)
             {
-                var username = Session["a_name"] = a_name;
+                Session["a_name"] = a_name;
                 Session["a_lastname"] = a_lastname;
+                Session["a_email"] = email;
+
                 Response.Write("session create" + Session["a_name"]);
 
                 Response.Redirect("index.cshtml");
