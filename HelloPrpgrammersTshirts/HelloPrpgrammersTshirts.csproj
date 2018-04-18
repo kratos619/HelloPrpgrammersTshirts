@@ -179,6 +179,34 @@
     <Content Include="src\fonts\fontawesome-webfont.woff" />
     <Content Include="src\fonts\fontawesome-webfont.woff2" />
     <Content Include="src\fonts\FontAwesome.otf" />
+    <Content Include="src\images\banner_1.jpg" />
+    <Content Include="src\images\banner_2.jpg" />
+    <Content Include="src\images\banner_3.jpg" />
+    <Content Include="src\images\blog_1.jpg" />
+    <Content Include="src\images\blog_2.jpg" />
+    <Content Include="src\images\blog_3.jpg" />
+    <Content Include="src\images\deal_ofthe_week.png" />
+    <Content Include="src\images\desc_1.jpg" />
+    <Content Include="src\images\desc_2.jpg" />
+    <Content Include="src\images\desc_3.jpg" />
+    <Content Include="src\images\map_marker.png" />
+    <Content Include="src\images\product_1.png" />
+    <Content Include="src\images\product_10.png" />
+    <Content Include="src\images\product_2.png" />
+    <Content Include="src\images\product_3.png" />
+    <Content Include="src\images\product_4.png" />
+    <Content Include="src\images\product_5.png" />
+    <Content Include="src\images\product_6.png" />
+    <Content Include="src\images\product_7.png" />
+    <Content Include="src\images\product_8.png" />
+    <Content Include="src\images\product_9.png" />
+    <Content Include="src\images\single_1.jpg" />
+    <Content Include="src\images\single_1_thumb.jpg" />
+    <Content Include="src\images\single_2.jpg" />
+    <Content Include="src\images\single_2_thumb.jpg" />
+    <Content Include="src\images\single_3.jpg" />
+    <Content Include="src\images\single_3_thumb.jpg" />
+    <Content Include="src\images\slider_1.jpg" />
     <Content Include="src\P_img\product_1.png" />
     <Content Include="src\scss\style.scss" />
     <Content Include="src\Shared\Admin_Header.cshtml" />
@@ -186,6 +214,7 @@
     <Content Include="src\update_item.cshtml" />
     <Content Include="src\delete_products.cshtml" />
     <Content Include="src\edit_users.cshtml" />
+    <Content Include="src\logout.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
