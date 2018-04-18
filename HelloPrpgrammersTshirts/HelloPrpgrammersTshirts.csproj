@@ -207,6 +207,8 @@
     <Content Include="src\images\single_3.jpg" />
     <Content Include="src\images\single_3_thumb.jpg" />
     <Content Include="src\images\slider_1.jpg" />
+    <Content Include="src\js\app.js" />
+    <Content Include="src\js\particles.js" />
     <Content Include="src\P_img\product_1.png" />
     <Content Include="src\scss\style.scss" />
     <Content Include="src\Shared\Admin_Header.cshtml" />
@@ -215,6 +217,8 @@
     <Content Include="src\delete_products.cshtml" />
     <Content Include="src\edit_users.cshtml" />
     <Content Include="src\logout.cshtml" />
+    <Content Include="src\user_login.cshtml" />
+    <Content Include="src\js\particles.json" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
